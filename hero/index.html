@@ -11,12 +11,16 @@
 		/>
 		<title>Awesome</title>
 		<script src="https://cdn.tailwindcss.com"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 		<link
 			rel="shortcut icon"
 			type="image/png"
 			href="https://img.icons8.com/wired/64/000000/fire-heart.png"
 		/>
 		<style type="text/tailwindcss">
+			[x-cloak] {
+				display: none;
+			}
 			:root {
 				--primary: rgb(88, 40, 244);
 				--primary-hover: rgb(69, 29, 200);
@@ -95,38 +99,67 @@
 			.highlight {
 				@apply !bg-indigo-100;
 			}
+			.titleBlip {
+				animation: 1s fadeIn;
+			}
+			@keyframes fadeIn {
+				0% {opacity: 0;}
+				10% {opacity: 0;}
+				100% { opacity: 1;}
+			}
 		</style>
 	</head>
 	<body>
 		<header
-			class="bg-gray-800 h-20 text-white flex items-center justify-between px-8 sticky z-50"
+			x-data="{ mobilenavOpen: false }"
+			class="bg-gray-800 h-20 text-white md:flex items-center justify-between [&>*]:px-8 sticky z-50"
 		>
-			<div class="flex items-center gap-1">
-				<img
-					class="h-8"
-					src="https://img.icons8.com/wired/64/ffffff/fire-heart.png"
-					alt="fire-heart"
-				/>
-				Awesome
-			</div>
-			<nav class="list-none flex items-center navitems">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Create Post</a></li>
-				<li>
-					<a>
-						<img
-							class="h-8 rounded-full object-cover bg-teal-200"
-							src="https://img.icons8.com/doodle/96/bart-simpson.png"
-							alt="bart-simpson"
-						/>
-						Bart
-						<img
-							class="w-4"
-							src="https://img.icons8.com/ios/50/777777/expand-arrow.png"
-							alt="expand-arrow"
-						/>
+			<div class="flex items-center justify-between h-20">
+				<div class="flex items-center gap-1">
+					<img
+						class="h-8"
+						src="https://img.icons8.com/wired/64/ffffff/fire-heart.png"
+						alt="fire-heart"
+					/>
+					Awesome
+				</div>
+				<div class="md:hidden">
+					<a @click="mobilenavOpen = !mobilenavOpen" class="h-12 w-12 flex items-center justify-center rounded-lg cursor-pointer hover:bg-gray-700">
+						<img x-show="!mobilenavOpen" class="w-6 h-6 select-none" src="https://img.icons8.com/small/64/ffffff/menu.png" alt="menu"/>
+						<img x-show="mobilenavOpen" x-cloak class="w-6 h-6 select-none" src="https://img.icons8.com/small/64/ffffff/delete-sign.png" alt="menu"/>
 					</a>
-				</li>
+				</div>
+			</div>
+			<nav x-show="mobilenavOpen" x-cloak class="md:!block bg-gray-800 w-screen h-screen md:h-auto md:w-auto -mt-20 md:mt-0 absolute md:relative z-[-1]"
+			x-transition:enter="duration-300 ease-out"
+			x-transition:enter-start="opacity-0 -translate-y-96" 
+			x-transition:enter-end="opacity-100 translate-y-0">
+				<ul class="list-none flex flex-col md:flex-row gap-8 md:gap-0 justify-center h-full items-center navitems -translate-y-10 md:translate-y-0">
+					<li><a href="#">Home</a></li>
+					<li><a href="#">Create Post</a></li>
+					<li class="relative" x-data="{dropdownOpen: false}">
+						<a @click="dropdownOpen= !dropdownOpen">
+							<img
+								class="h-8 rounded-full object-cover bg-teal-200"
+								src="https://img.icons8.com/doodle/96/bart-simpson.png"
+								alt="bart-simpson"
+							/>
+							Bart
+							<img
+								x-bind:class="dropdownOpen ? 'rotate-180 duration-300' : ''"
+								class="w-4"
+								src="https://img.icons8.com/ios/50/777777/expand-arrow.png"
+								alt="expand-arrow"
+							/>
+						</a>
+						<div x-show="dropdownOpen" x-cloak @click.away="dropdownOpen = false" x-transition:enter="duration-300 ease-out" x-transition:enter-start="opacity-0 -translate-y-5 scale-90" x-transition:enter-end="opacity-100 translate-y-0 scale-100" class="absolute right-8 bg-white text-black shadow rounded-lg w-48 p-2 z-50">
+							<ul class="hoverlist [&>li>a]:justify-end">
+								<li><a href="">My Profile</a></li>
+								<li><a href="">Logout</a></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
 			</nav>
 		</header>
 
@@ -137,7 +170,7 @@
 				class="col-start-1 row-start-1 w-full h-full bg-gray-800 bg-opacity-40"
 			></div>
 			<div class="col-start-1 row-start-1 py-24 px-10">
-				<h1>Awesome photos and captions</h1>
+				<h1 class="titleBlip">Awesome photos and captions</h1>
 				<p class="text-lg font-bold">
 					Share your favourite photos from flicker and add a great caption
 				</p>
