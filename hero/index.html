@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+			rel="stylesheet"
+		/>
+		<title>Awesome</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<link
+			rel="shortcut icon"
+			type="image/png"
+			href="https://img.icons8.com/wired/64/000000/fire-heart.png"
+		/>
+		<style type="text/tailwindcss">
+			:root {
+				--primary: rgb(88, 40, 244);
+				--primary-hover: rgb(69, 29, 200);
+				--font-lobster: "Lobster", sans-serif;
+			}
+
+			h1 {
+				font-size: 4rem;
+				line-height: 1.2;
+				font-weight: bold;
+				margin-bottom: 1rem;
+				font-family: var(--font-lobster);
+			}
+
+			h2 {
+				font-size: 1.5rem;
+				font-weight: bold;
+				margin-bottom: 0.75rem;
+			}
+
+			.font-lobster {
+				font-family: var(--font-lobster);
+			}
+
+			.navitems > li > a {
+				@apply h-12 px-4 hover:bg-gray-700 rounded-lg flex items-center gap-2 cursor-pointer;
+			}
+
+			.button {
+				display: inline-flex;
+				flex-wrap: wrap;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+				text-align: center;
+				border-radius: 0.5rem;
+				cursor: pointer;
+				margin: 10px;
+				padding: 0 1rem;
+				padding-left: 1rem;
+				min-height: 3.3rem;
+				font-weight: 600;
+				box-shadow: 0 4px 3px rgba(0, 0, 0, 0.1);
+				transition-property: transform;
+				transition-duration: 0.2s;
+				color: white;
+				background-color: var(--primary);
+			}
+
+			.button:hover {
+				background-color: var(--primary-hover);
+			}
+
+			.button:active {
+				transform: scale(0.95);
+			}
+			.card {
+				display: flex;
+				flex-direction: column;
+				overflow: hidden;
+				position: relative;
+				border-radius: 1rem;
+				box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+				margin-bottom: 2rem;
+				background-color: white;
+				padding-bottom: 1rem;
+			}
+			.hoverlist > * {
+				@apply hover:bg-gray-100 rounded-md transition duration-150;
+			}
+
+			.hoverlist > * > a {
+				@apply p-2 block flex items-center;
+			}
+
+			.highlight {
+				@apply !bg-indigo-100;
+			}
+		</style>
+	</head>
+	<body>
+		<header
+			class="bg-gray-800 h-20 text-white flex items-center justify-between px-8 sticky z-50"
+		>
+			<div class="flex items-center gap-1">
+				<img
+					class="h-8"
+					src="https://img.icons8.com/wired/64/ffffff/fire-heart.png"
+					alt="fire-heart"
+				/>
+				Awesome
+			</div>
+			<nav class="list-none flex items-center navitems">
+				<li><a href="#">Home</a></li>
+				<li><a href="#">Create Post</a></li>
+				<li>
+					<a>
+						<img
+							class="h-8 rounded-full object-cover bg-teal-200"
+							src="https://img.icons8.com/doodle/96/bart-simpson.png"
+							alt="bart-simpson"
+						/>
+						Bart
+						<img
+							class="w-4"
+							src="https://img.icons8.com/ios/50/777777/expand-arrow.png"
+							alt="expand-arrow"
+						/>
+					</a>
+				</li>
+			</nav>
+		</header>
+
+		<div
+			class="grid text-white text-center bg-center bg-[url('https://images.unsplash.com/photo-1434725039720-aaad6dd32dfe?q=80&w=1642&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]"
+		>
+			<div
+				class="col-start-1 row-start-1 w-full h-full bg-gray-800 bg-opacity-40"
+			></div>
+			<div class="col-start-1 row-start-1 py-24 px-10">
+				<h1>Awesome photos and captions</h1>
+				<p class="text-lg font-bold">
+					Share your favourite photos from flicker and add a great caption
+				</p>
+				<a class="button" href="">Get Started</a>
+			</div>
+		</div>
+
+		<div class="grid grid-cols-3 max-w-7xl mx-auto mt-6">
+			<main class="col-span-2 mr-[10%]">
+				<article class="card">
+					<div class="flex items-center justify-between px-4 h-14">
+						<h3 class="text-xl font-bold">Little Jedi</h3>
+						<div class="text-sm text-gray-500">
+							flickr 0 <a href="" target="blank">John Doe</a>
+						</div>
+					</div>
+					<figure>
+						<img
+							class="w-full h-80"
+							src="https://images.unsplash.com/photo-1737385024749-ed2c9fac24cb?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+							alt=""
+						/>
+					</figure>
+					<div class="p-4 mb-5">
+						<a href="" class="flex items-center gap-2">
+							<img
+								class="w-8 h-8"
+								src="https://img.icons8.com/ios/50/user-male-circle--v1.png"
+								alt="user-male-circle--v1"
+							/>
+							<span class="hover:underline">Lisa</span>
+						</a>
+						<p class="text-bold text-3xl font-bold font-lobster py-4">
+							Cresent moon on evening sky
+						</p>
+						<div class="flex items-center gap-2 text-sm mb-5 cursor-pointer">
+							<a
+								class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-500 hover:text-white"
+								>Aesthetic</a
+							>
+							<a
+								class="bg-gray-200 rounded-full px-3 py-1 hover:bg-gray-500 hover:text-white"
+								>Chill</a
+							>
+						</div>
+						<div class="flex items-center justify-between text-sm px-2">
+							<a class="font-bold hover:underline" href=""
+								>Comments
+								<span class="font-light text-gray-500 ml-2">3</span></a
+							>
+							<div class="flex items-center gap-4 [&>a:hover]:underline">
+								<div class="flex items-center gap-1">
+									<img
+										class="h-8"
+										src="https://img.icons8.com/wired/64/ffffff/fire-heart.png"
+										alt="fire-heart"
+									/>1
+								</div>
+								<a href="">Like</a>
+								<a href="">Edit</a>
+								<a href="">Delete</a>
+							</div>
+						</div>
+					</div>
+				</article>
+			</main>
+			<aside class="col-span-1 mr-[20%]">
+				<section class="card p-4">
+					<h2>Categories</h2>
+					<ul class="hoverlist">
+						<li>
+							<a href="">
+								<img
+									class="w-6 h-6 object-cover mr-2"
+									src="https://img.icons8.com/material-rounded/48/landscape.png"
+									alt="landscape"
+								/>
+								Landscape
+							</a>
+						</li>
+						<li>
+							<a href="">
+								<img
+									class="w-6 h-6 object-cover mr-2"
+									src="https://img.icons8.com/material-sharp/50/conference-call.png"
+									alt="conference-call"
+								/>People</a
+							>
+						</li>
+						<li>
+							<a href="">
+								<img
+									class="highlight w-6 h-6 object-cover mr-2"
+									src="https://img.icons8.com/ios-glyphs/50/rabbit.png"
+									alt="rabbit"
+								/>Animals</a
+							>
+						</li>
+						<li>
+							<a href="">
+								<img
+									class="w-6 h-6 object-cover mr-2"
+									src="https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/50/external-glyph-shapes-tanah-basah-glyph-tanah-basah.png"
+									alt="external-glyph-shapes-tanah-basah-glyph-tanah-basah"
+								/>
+								Abstract</a
+							>
+						</li>
+						<li>
+							<a href="">
+								<img
+									class="w-6 h-6 object-cover mr-2"
+									src="https://img.icons8.com/ios-filled/50/black-and-white.png"
+									alt="black-and-white"
+								/>
+								Black & white</a
+							>
+						</li>
+					</ul>
+				</section>
+				<section class="card p-4">
+					<h2 class="">Top Photos</h2>
+					<ul class="hoverlist">
+						<li>
+							<a href="">
+								<img
+									class="w-10 h-10 rounded-lg object-cover mr-3"
+									src="https://images.unsplash.com/photo-1737385024749-ed2c9fac24cb?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+									alt=""
+								/>
+								<img
+									class="w-4 h-4 rounded-full object-cover mr-1"
+									src="https://img.icons8.com/ios/50/user-male-circle--v1.png"
+									alt="user-male-circle--v1"
+								/>
+
+								<span class="font-bold text-sm mr-1">Homer</span>
+								<span class="text-xs font-light text-gray-500">(5 likes)</span>
+							</a>
+						</li>
+						<li>
+							<a href="">
+								<img
+									class="w-10 h-10 rounded-lg object-cover mr-3"
+									src="https://images.unsplash.com/photo-1737385024749-ed2c9fac24cb?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+									alt=""
+								/>
+								<img
+									class="w-4 h-4 rounded-full object-cover mr-1"
+									src="https://img.icons8.com/ios/50/user-male-circle--v1.png"
+									alt="user-male-circle--v1"
+								/>
+
+								<span class="font-bold text-sm mr-1">Homer</span>
+								<span class="text-xs font-light text-gray-500">(5 likes)</span>
+							</a>
+						</li>
+					</ul>
+				</section>
+                    <h2>Categories</h2>
+					<ul class="hoverlist">
+						<li>
+							<a href="">
+								
+								<img
+									class="w-4 h-4 rounded-full object-cover mr-1"
+									src="https://img.icons8.com/ios/50/user-male-circle--v1.png"
+									alt="user-male-circle--v1"
+								/>
+
+								<span class="font-bold text-sm mr-1">Homer</span>
+								<span class="text-xs font-light text-gray-500">(5 likes)</span>
+							</a>
+						</li>
+						<li>
+							<a href="">
+								
+								<img
+									class="w-4 h-4 rounded-full object-cover mr-1"
+									src="https://img.icons8.com/ios/50/user-male-circle--v1.png"
+									alt="user-male-circle--v1"
+								/>
+
+								<span class="font-bold text-sm mr-1">Homer</span>
+								<span class="text-xs font-light text-gray-500">(5 likes)</span>
+							</a>
+						</li>
+					</ul>
+				</section>
+
+			</aside>
+		</div>
+	</body>
+</html>
