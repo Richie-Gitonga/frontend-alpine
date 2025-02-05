@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>BongoHealth</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+			rel="stylesheet"
+		/>
+		<script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+		<script
+			defer
+			src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+		></script>
+		<style>
+			body {
+				font-family: "Poppins", serif;
+			}
+			.card {
+				width: 100%;
+				border-radius: 20px;
+				padding: 20px;
+			}
+			.iconlist {
+				display: flex;
+				align-items: center;
+				gap: 0.25rem;
+				cursor: pointer;
+				& > a {
+					font-size: 0.75rem;
+					font-weight: 600;
+				}
+			}
+			.black-button {
+				background-color: black;
+				color: white;
+				padding: 0.4rem 1.24rem;
+				border-radius: 1.25rem;
+				cursor: pointer;
+				font-size: 0.75rem;
+			}
+			.black-button:hover {
+				background-color: darkgray;
+			}
+			.blog-card {
+				position: relative;
+				width: 8rem;
+				height: 12rem;
+				background-color: rgba(0, 0, 0, 0.4) !important;
+				display: flex;
+				align-items: flex-end;
+			}
+			.navlist {
+				padding: 0.5rem 1rem;
+				@variant hover{
+					background: lightgray;
+				}
+			}
+		</style>
+	</head>
+	<body class="grid grid-cols-4 w-full font-mono">
+		<navbar class="p-12 ">
+			<header></header>
+			<nav>
+				<ul class="w-full my-5">
+					<li class="flex items-center gap-2">
+						<img class="h-6 w-6" src="https://img.icons8.com/ios-filled/50/1A1A1A/feedly.png" alt="feedly"/>
+						<a href="">Feed</a>
+					</li>
+				</ul>
+			</nav>
+		</navbar>
+		<main
+			class="relative col-span-2 w-full max-w-[50rem] mx-auto h-screen overflow-x-hidden overflow-y-auto scroll-smooth"
+		>
+			<header
+				class="flex items-center justify-between bg-white sticky w-full h-12 top-0 left-0 px-5"
+			>
+				<h2 class="font-black text-lg tracking-light">Feeds</h2>
+				<ul class="flex items-center gap-5 text-sm [&>li>a]:text-gray-400">
+					<li><a class="font-semibold text-black" href="">Recents</a></li>
+					<li><a href="">Friends</a></li>
+					<li><a href="">Popular</a></li>
+				</ul>
+			</header>
+
+			<div class="">
+				<div class="card bg-blue-200 my-4">
+					<header class="flex items-center justify-between">
+						<div class="flex items-center gap-5">
+							<img
+								class="w-12 h-12 rounded-full object-cover object-center"
+								src="images/user-1.jpg"
+								alt=""
+							/>
+							<div>
+								<a class="text-sm font-semibold hover:underline cursor-pointer"
+									>George Lobko</a
+								>
+								<p class="text-xs text-gray-400">2 hours ago</p>
+							</div>
+						</div>
+						<img
+							class="w-10 h-10 rounded-full border border-gray-200 hover:bg-gray-200 p-2 cursor-pointer"
+							src="https://img.icons8.com/color/48/menu-2.png"
+							alt="menu-2"
+						/>
+					</header>
+					<div class="my-2">
+						<p class="text-sm tracking-tight text-justify leading-6">
+							Thanks to advances in technology, researchers and healthcare
+							providers can see how meditation affects your brain. However, to
+							understand some of these changes, it helps to know a little about
+							brain structure.
+						</p>
+						<div
+							class="grid grid-cols-2 grid-row-2 gap-2 px-2 [&>img]:rounded-sm my-1"
+						>
+							<img src="images/med-1.jpg" alt="meditation" />
+							<img src="images/med-2.jpg" alt="meditation" />
+						</div>
+					</div>
+					<footer class="flex items-center justify-between">
+						<ul class="flex items-center gap-4">
+							<li class="iconlist">
+								<img
+									class="h-4"
+									src="https://img.icons8.com/ios-glyphs/50/737373/visible--v1.png"
+									alt="visible"
+								/>
+								<a
+									class="text-xs font-light text-gray-500 cursor-pointer hover:underline"
+									>6443</a
+								>
+							</li>
+							<li class="iconlist">
+								<img
+									class="h-4"
+									src="https://img.icons8.com/ios-filled/50/ff0000/like--v1.png"
+									alt="like"
+								/>
+								<a
+									class="text-xs font-light text-gray-500 cursor-pointer hover:underline"
+									>Like</a
+								>
+							</li>
+							<li class="iconlist">
+								<img
+									class="h-4"
+									src="https://img.icons8.com/ios-filled/50/737373/chat-message--v1.png"
+									alt="comment"
+								/>
+								<a
+									class="text-xs font-light text-gray-500 cursor-pointer hover:underline"
+									>Comment</a
+								>
+							</li>
+						</ul>
+						<div
+							class="relative flex items-center gap-2 bg-red-200 rounded-full px-2 py-1 cursor-pointer"
+							x-data="{ openReaction: false, reaction: ['😍', '😥', '🤯', '❤️', '🔥'], active: 0}"
+							@click="openReaction = !openReaction"
+						>
+							<div x-text="reaction[active]"></div>
+							<p class="text-xs font-light">react</p>
+							<div
+								class="absolute -left-30 -top-5 rotate-4 flex items-center gap-4 bg-white px-4 rounded-full"
+								x-show="openReaction"
+							>
+								<template x-for="(icon, index) in reaction">
+									<p x-text="icon" @click="active=index"></p>
+									<img
+										@click="openReaction=!openReaction"
+										class="h-6 w-6"
+										src="https://img.icons8.com/windows/32/000/macos-close.png"
+										alt="macos-close"
+									/>
+								</template>
+								
+							</div>
+						</div>
+					</footer>
+				</div>
+				<div class="card bg-pink-200 mt-4">
+					<header class="flex items-center justify-between">
+						<div class="flex items-center gap-5">
+							<img
+								class="w-12 h-12 rounded-full object-cover object-center"
+								src="images/user-1.jpg"
+								alt=""
+							/>
+							<div>
+								<a class="text-sm font-semibold hover:underline cursor-pointer"
+									>George Lobko</a
+								>
+								<p class="text-xs text-gray-400">2 hours ago</p>
+							</div>
+						</div>
+						<img
+							class="w-10 h-10 rounded-full border border-gray-200 hover:bg-blue-200 p-2 cursor-pointer"
+							src="https://img.icons8.com/color/48/menu-2.png"
+							alt="menu-2"
+						/>
+					</header>
+					<div class="my-2">
+						<p class="text-sm tracking-tight text-justify leading-6">
+							Thanks to advances in technology, researchers and healthcare
+							providers can see how meditation affects your brain. However, to
+							understand some of these changes, it helps to know a little about
+							brain structure.
+						</p>
+					</div>
+					<footer class="flex items-center justify-between">
+						<ul
+							class="flex items-center gap-5 [&>li]:flex [&>li]:items-center [&>li]:gap-2"
+						>
+							<li>
+								<img
+									class="h-4"
+									src="https://img.icons8.com/ios-glyphs/50/737373/visible--v1.png"
+									alt="visible"
+								/>
+								<a
+									class="text-xs font-light text-gray-500 cursor-pointer hover:underline"
+									>6443</a
+								>
+							</li>
+							<li>
+								<img
+									class="h-4"
+									src="https://img.icons8.com/ios-filled/50/ff0000/like--v1.png"
+									alt="like"
+								/>
+								<a
+									class="text-xs font-light text-gray-500 cursor-pointer hover:underline"
+									>Like</a
+								>
+							</li>
+							<li>
+								<img
+									class="h-4"
+									src="https://img.icons8.com/ios-filled/50/737373/chat-message--v1.png"
+									alt="comment"
+								/>
+								<a
+									class="text-xs font-light text-gray-500 cursor-pointer hover:underline"
+									>Comment</a
+								>
+							</li>
+						</ul>
+					</footer>
+				</div>
+			</div>
+
+			<form class="card bg-gray-200 my-4">
+				<div
+					class="w-full flex items-center gap-2 bg-white rounded-full py-2 px-4 mb-4"
+				>
+					<img
+						class="h-6 w-6 rounded-full object-cover object-center"
+						src="images/user-1.jpg"
+						alt=""
+					/>
+					<textarea
+						class="outline-none border-none text-sm text-gray-500 resize-none"
+						placeholder="share something..."
+						rows="1"
+						name=""
+						id=""
+					></textarea>
+				</div>
+				<div class="flex items-center justify-between">
+					<ul class="flex items-center gap-4">
+						<li class="iconlist">
+							<img
+								class="h-6"
+								src="https://img.icons8.com/sf-black-filled/64/000/file.png"
+								alt="file"
+							/>
+							<a class="tracking-light">file</a>
+						</li>
+						<li class="iconlist">
+							<img
+								class="h-6"
+								src="https://img.icons8.com/sf-regular-filled/48/000/image.png"
+								alt="image"
+							/>
+							<a class="tracking-light">image</a>
+						</li>
+						<li class="iconlist">
+							<img
+								class="h-4"
+								src="https://img.icons8.com/ios-filled/50/000/marker.png"
+								alt="marker"
+							/>
+							<a class="tracking-light">location</a>
+						</li>
+						<li
+							class="iconlist cursor-pointer hover:bg-gray-300 p-2 rounded-sm"
+						>
+							<img
+								class="h-4"
+								src="https://img.icons8.com/ios/50/000/globe--v1.png"
+								alt="globe--v1"
+							/>
+							<a class="flex items-center gap-1">
+								<p class="text-xs tracking-light">public</p>
+								<img
+									class="w-6"
+									src="https://img.icons8.com/pastel-glyph/64/000/expand-arrow.png"
+									alt="expand-arrow"
+								/>
+							</a>
+						</li>
+					</ul>
+					<button class="black-button" type="submit">Send</button>
+				</div>
+			</form>
+		</main>
+		<aside class="p-5">
+			<section>
+				<h1 class="h-12">Articles</h1>
+				<ul class="grid grid-cols-2 overflow-x-hidden items-center gap-2 mx-4">
+					<li class="blog-card">
+						<img
+							class="absolute w-full h-full -z-5"
+							src="images/med-1.jpg"
+							alt=""
+						/>
+						<a
+							href=""
+							class="cursor-pointer hover:-translate-y-2 transition-all delay-150 ease-in-out"
+						>
+							<p
+								class="p-5 font-semibold tracking-lighter text-center text-white text-xs capitalize"
+							>
+								What Is Depression? - American Psychiatric Association
+							</p>
+						</a>
+					</li>
+					<li class="blog-card">
+						<img
+							class="absolute w-full h-full -z-5"
+							src="images/med-2.jpg"
+							alt=""
+						/>
+						<a
+							href=""
+							class="cursor-pointer hover:-translate-y-2 transition-all delay-150 ease-in-out"
+						>
+							<p
+								class="p-5 font-semibold tracking-lighter text-center text-white text-xs capitalize"
+							>
+								What Is Depression? - American Psychiatric Association
+							</p>
+						</a>
+					</li>
+				</ul>
+			</section>
+			<section class="mt-4">
+				<h1>Suggestions</h1>
+				<ul>
+					<li class="flex items-center justify-between my-4">
+						<div class="flex items-center gap-4">
+							<img
+								class="h-8 w-8 rounded-full object-cover object-center"
+								src="images/user-2.jpg"
+								alt="john doe"
+							/>
+							<h5 class="font-semibold text-sm">John doe</h5>
+						</div>
+						<a class="black-button" href="">Follow</a>
+					</li>
+					<li class="flex items-center justify-between my-4">
+						<div class="flex items-center gap-4">
+							<img
+								class="h-8 w-8 rounded-full object-cover object-center"
+								src="images/user-3.jpg"
+								alt="john doe"
+							/>
+							<h5 class="font-semibold text-sm">Mary Jane</h5>
+						</div>
+						<a class="black-button" href="">Follow</a>
+					</li>
+					<li class="flex items-center justify-between my-4">
+						<div class="flex items-center gap-4">
+							<img
+								class="h-8 w-8 rounded-full object-cover object-center"
+								src="images/user-4.jpg"
+								alt="john doe"
+							/>
+							<h5 class="font-semibold text-sm">Chris Hem</h5>
+						</div>
+						<a class="black-button" href="">Follow</a>
+					</li>
+				</ul>
+				<a
+					href=""
+					class="block hover:underline text-gray-600 text-sm text-center my-5"
+					>See more</a
+				>
+			</section>
+		</aside>
+	</body>
+</html>
