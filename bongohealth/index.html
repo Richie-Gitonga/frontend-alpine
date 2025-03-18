@@ -16,170 +16,373 @@
 			src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
 		></script>
 		<style type="text/tailwindcss">
-			.tag {
-				@apply text-xs px-4 py-2 bg-[#1a1a1a] font-semibold text-white rounded-full cursor-pointer;
+			p {
+				@apply text-sm leading-6 tracking-wide;
 			}
+			.tag {
+				@apply text-xs px-4 py-2 bg-gray-700 font-semibold text-white rounded-full cursor-pointer;
+			}
+			.tags > li > a {
+				@apply hover:bg-gray-200 px-4 py-2 rounded-sm;
+			}
+
+			.pages > li > a {
+				@apply px-4 py-2 mr-2 bg-blue-100 hover:bg-gray-400 [.active]:bg-gray-400
+			}
+			body {
+				font-family: "Poppins", sans-serif;
+				background-color: #fff;
+				color: #1f2937;
+			}
+
+			.button {
+				background-color: #e1ecf4;
+				border-radius: 4px;
+				border: 1px solid #7aa7c7;
+				box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+				box-sizing: border-box;
+				color: #39739d;
+				cursor: pointer;
+				display: inline-block;
+				margin: 12px 0;
+				outline: none;
+				padding: 6px 1.5em;
+				position: relative;
+				text-align: center;
+				text-decoration: none;
+				user-select: none;
+				-webkit-user-select: none;
+				touch-action: manipulation;
+				vertical-align: baseline;
+				white-space: nowrap;
+			}
+
+			.button:hover,
+			.button:focus {
+				background-color: #b3d3ea;
+				color: #2c5777;
+			}
+
+			.button:focus {
+				box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+			}
+
+			.button:active {
+				background-color: #a0c7e4;
+				box-shadow: none;
+				color: #2c5777;
+			}
+
 		</style>
 	</head>
 	<body>
-		<header class="grid grid-cols-1 w-full h-screen">
-			<div class="grid grid-rows-2 relative col-start-1 bg-[url('https://images.unsplash.com/photo-1527549993586-dff825b37782?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80')] bg-gradient-to-b bg-cover bg-center to-black">
+		<!-- header -->
+		<header class="relative w-full h-screen">
+			<!-- navbar -->
+			<nav
+				class="w-full h-20 px-8 py-2 text-white bg-gray-900/60 flex items-center justify-between"
+			>
+				<div class="flex items-center gap-8">
+					<h1>BongoHealth</h1>
+					<ul class="flex items-center gap-5">
+						<li><a href="">Home</a></li>
+						<li><a href="">About</a></li>
+						<li><a href="">Community</a></li>
+						<li><a href="">Blogs</a></li>
+					</ul>
+				</div>
+				<div class="flex items-center">
+					<div
+						class="flex items-center gap-2 bg-gray-600/40 rounded-sm cursor-pointer py-2 px-4 text-xs"
+					>
+						<input
+							class="w-full outline-none border-none"
+							type="text"
+							placeholder="search a topic"
+						/>
+						<button type="submit" class="cursor-pointer">
+							<img
+								class="w-4 h-4"
+								src="https://img.icons8.com/ios/50/search.png"
+								alt="search"
+							/>
+						</button>
+					</div>
+					<div>
+						<a href="#">Login</a>
+						<a href="#">Signup</a>
+					</div>
+				</div>
+			</nav>
+			<!-- hero -->
+			<div x-data="latestArticles()" class="w-full h-full -mt-20">
+				<!-- carousel buttons -->
 				<button
+					@click="prevSlide()"
 					class="flex items-center justify-center absolute inset-y-[50%] left-5 p-5 w-8 rounded-full group bg-gray-500/75 hover:bg-gray-700/75 cursor-pointer"
 				>
 					<span class="text-gray-50"> &larr; </span>
 				</button>
 				<button
+					@click="nextSlide()"
 					class="flex items-center justify-center absolute inset-y-[50%] right-5 p-5 w-8 rounded-full group bg-gray-500/75 hover:bg-gray-700/75 cursor-pointer"
 				>
 					<span class="text-gray-50"> &rarr; </span>
 				</button>
-
-				<div class="row-start-2 relative bottom-0 max-w-screen-lg mx-auto text-white bg-gray-800/40 p-8 rounded-md">
-					<div class="flex items-end justify-between">
-						<div class="w-2/3">
-							<a class="tag" href="#">Anxiety</a>
-							<h5 class="mt-5 text-2xl font-semibold">
-								How Food and Diet Can Affect Anxiety
-							</h5>
-							<p class="my-2">
-								Food and diet play a significant role in mental health,
-								including anxiety levels. The nutrients we consume directly
-								impact brain function, neurotransmitter production...
-							</p>
-						</div>
-						<div>
-							<div class="flex items-center gap-2">
-								<img
-									class="w-12 h-12 rounded-full"
-									src="https://cdn.pixabay.com/photo/2016/11/29/13/14/attractive-1869761_1280.jpg"
-									alt=""
-								/>
-								<p>Stephanie mzwemba</p>
+				<!-- article -->
+				<template x-for="(slide, index) in slides" :key="index">
+					<article class="text-white">
+						<div
+							x-show="currentSlide === index"
+						>
+							<img
+								:src="slide.thumbnail"
+								alt="background"
+								class="absolute top-0 left-0 w-screen h-screen object-cover object-center -z-50"
+							/>
+							<div
+								class="w-full max-w-4/5 md:flex items-center justify-between absolute bottom-0 left-1/2 -translate-x-1/2 max-w-screen-lg mb-10 bg-gray-800/40 p-8 rounded-md"
+							>
+								<div class="w-full max-w-2/3">
+									<a class="tag" href="#" x-text="slide.category"></a>
+									<h5
+										class="mt-5 text-2xl font-semibold"
+										x-text="slide.title"
+									></h5>
+									<p class="my-2" x-text="slide.content"></p>
+								</div>
+								<div>
+									<div class="flex items-center gap-2">
+										<img
+											class="w-12 h-12 rounded-full"
+											src="https://cdn.pixabay.com/photo/2016/11/29/13/14/attractive-1869761_1280.jpg"
+											alt=""
+										/>
+										<p class="font-semibold">Stephanie mzwemba</p>
+									</div>
+									<div class="flex items-center gap-2 text-xs">
+										<p>30th Jan 2024</p>
+										<span> . </span>
+										<p>10 mins read</p>
+									</div>
+								</div>
 							</div>
-							<div class="flex items-center items-center gap-4 my-4">
-								<p>30th Jan 2024</p>
-								<span> . </span>
-								<p>10 mins read</p>
-							</div>
 						</div>
-					</div>
-					<div>
-						<button
-							class="h-2 w-2 rounded-full bg-gray-300 hover:bg-gray-300 ring-2 ring-gray-300"
-						></button>
-						<button
-							class="h-2 w-2 rounded-full bg-gray-500 hover:bg-gray-300 ring-2 ring-gray-300"
-						></button>
-						<button
-							class="h-2 w-2 rounded-full bg-gray-500 hover:bg-gray-300 ring-2 ring-gray-300"
-						></button>
-					</div>
-				</div>
+					</article>
+				</template>
 			</div>
+			<!-- end hero -->
 		</header>
-		<main
-			class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-screen-lg mx-auto"
-		>
-			<article class="col-span-1">
-				<div class="relative">
-					<img
-						class="w-full h-[9.375rem] rounded-md"
-						src="https://images.unsplash.com/photo-1633104326066-504911cc1347?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGFueGlldHl8ZW58MHx8MHx8fDA%3D"
-						alt=""
-					/>
-					<a class="tag absolute left-0 top-0">Anxiety</a>
+
+
+		<!-- main section -->
+		<main class="max-w-screen-xl mx-auto my-5">
+			<header>
+				<h2 class="text-xl font-semibold">Blog</h2>
+				<p class="mt-2">
+					Get all the latest posts on how to handle anxiety, stress and other
+					mental health related issues.
+				</p>
+				<div class="flex items-center justify-between mx-8 my-4 text-sm">
+					<ul class="flex items-center gap-8 flex-wrap tags">
+						<li>
+							<a href="">All</a>
+						</li>
+						<li>
+							<a href="">Anxiety</a>
+						</li>
+						<li>
+							<a href="">stress</a>
+						</li>
+						<li>
+							<a href="">Mental health</a>
+						</li>
+						<li>
+							<a href="">Trauma</a>
+						</li>
+					</ul>
+					<div class="flex items-center gap-2">
+						<p>Sort by:</p>
+						<a
+							href="#"
+							class="flex items-center p-2 rounded-sm hover:bg-gray-200"
+						>
+							<span>Newest</span>
+							<img
+								class="ml-2 w-4 h-4"
+								src="https://img.icons8.com/ios/50/expand-arrow--v2.png"
+								alt=""
+							/>
+						</a>
+					</div>
 				</div>
-				<div class="flex items-center items-center gap-4 my-4">
-					<p>30th Jan 2024</p>
-					<span> . </span>
-					<p>10 mins read</p>
+			</header>
+			
+
+			<!-- articles -->
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+				<article class="col-span-1">
+					<div class="relative">
+						<img
+							class="w-full h-auto rounded-md"
+							src="https://images.unsplash.com/photo-1633104326066-504911cc1347?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGFueGlldHl8ZW58MHx8MHx8fDA%3D"
+							alt=""
+						/>
+						<a class="tag absolute left-2 top-2">Anxiety</a>
+					</div>
+					<div class="flex items-center items-center gap-4 my-4">
+						<p>30th Jan 2024</p>
+						<span> . </span>
+						<p>10 mins read</p>
+					</div>
+					<div class="mx-2">
+						<h5 class="text-xl font-semibold">How Food and Diet Can Affect Anxiety</h5>
+						<p class="my-2">
+							Food and diet play a significant role in mental health, including
+							anxiety levels. The nutrients we consume...
+						</p>
+					</div>
+					<div class="flex items-center gap-2">
+						<img
+							class="w-6 h-6 rounded-full"
+							src="https://cdn.pixabay.com/photo/2016/11/29/13/14/attractive-1869761_1280.jpg"
+							alt=""
+						/>
+						<p class="font-semibold">Stephanie mzwemba</p>
+					</div>
+				</article>
+				<article class="col-span-1">
+					<div class="relative">
+						<img
+							class="w-full h-auto rounded-lg"
+							src="https://images.unsplash.com/photo-1633104326066-504911cc1347?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGFueGlldHl8ZW58MHx8MHx8fDA%3D"
+							alt=""
+						/>
+						<a class="tag absolute left-0 top-0">Anxiety</a>
+					</div>
+					<div class="flex items-center items-center gap-4 my-4">
+						<p>30th Jan 2024</p>
+						<span> . </span>
+						<p>10 mins read</p>
+					</div>
+					<div class="mx-2">
+						<h5 class="text-xl font-semibold">How Food and Diet Can Affect Anxiety</h5>
+						<p class="my-2">
+							Food and diet play a significant role in mental health, including
+							anxiety levels. The nutrients we consume...
+						</p>
+					</div>
+					<div class="flex items-center gap-2">
+						<img
+							class="w-6 h-6 rounded-full"
+							src="https://cdn.pixabay.com/photo/2016/11/29/13/14/attractive-1869761_1280.jpg"
+							alt=""
+						/>
+						<p class="font-semibold">Stephanie Wanjiku</p>
+					</div>
+				</article>
+				<article class="col-span-1">
+					<div class="relative">
+						<img
+							class="w-full h-auto rounded-lg"
+							src="https://images.unsplash.com/photo-1633104326066-504911cc1347?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGFueGlldHl8ZW58MHx8MHx8fDA%3D"
+							alt=""
+						/>
+						<a class="tag absolute left-0 top-0">Anxiety</a>
+					</div>
+					<div class="flex items-center items-center gap-4 my-4">
+						<p>30th Jan 2024</p>
+						<span> . </span>
+						<p>10 mins read</p>
+					</div>
+					<div class="mx-2">
+						<h5 class="text-xl font-semibold">How Food and Diet Can Affect Anxiety</h5>
+						<p class="my-2">
+							Food and diet play a significant role in mental health, including
+							anxiety levels. The nutrients we consume...
+						</p>
+					</div>
+					<div class="flex items-center gap-2">
+						<img
+							class="w-6 h-6 rounded-full"
+							src="https://cdn.pixabay.com/photo/2016/11/29/13/14/attractive-1869761_1280.jpg"
+							alt=""
+						/>
+						<p class="font-semibold">Stephanie mzwemba</p>
+					</div>
+				</article>
+			</div>
+
+
+			<!-- pagination -->
+			<section id="pagination" class="w-full max-w-sm mx-auto mt-10 flex items-center gap-4">
+				<a href="#"><img width="24" height="24" src="https://img.icons8.com/material-rounded/48/chevron-left.png" alt="chevron-left"/></a>
+				<ul class="pages flex items-center">
+					<li><a href="#" class="active">1</a></li>
+					<li><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li><a href="#">4</a></li>
+					<li><a href="#">5</a></li>
+				</ul>
+				<a href="#"><img width="24" height="24" src="https://img.icons8.com/material-rounded/48/chevron-right.png" alt="chevron-right"/></a>
+			</section>
+			<!-- recommendations -->
+			<section id="recommend" class="mx-auto mt-10 w-full max-w-[80%] h-[30rem] grid grid-cols-[1fr_2fr] grid-rows-[repeat(4, 1fr)] gap-2">
+				<div class="relative row-start-1 row-span-2 col-span-1 bg-gray-700/50 text-white" >
+					<img class="absolute inset-0 h-full -z-50 object-cover" src="https://images.unsplash.com/photo-1499810631641-541e76d678a2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y2FsbXxlbnwwfHwwfHx8MA%3D%3D" alt="cool landscape">
+					<div class="absolute top-15 p-5">
+						<p>What's popular today?</p>
+						<h5 class="text-xl font-semibold ">How Food and Diet Can Affect Anxiety</h5>
+						<button class="button">Read</button>
+					</div>
 				</div>
-				<div class="mx-2">
-					<h5 class="mt-5 text-2xl font-semibold">
-						How Food and Diet Can Affect Anxiety
-					</h5>
-					<p class="my-2">
-						Food and diet play a significant role in mental health, including
-						anxiety levels. The nutrients we consume directly impact brain
-						function, neurotransmitter production...
-					</p>
+				<div class="relative text-white bg-gray-700/50 row-start-3 row-span-2 col-span-1">
+					<img class="absolute inset-0 h-full -z-50 object-cover" src="https://plus.unsplash.com/premium_photo-1667113144491-eaccf04e894b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y2FsbXxlbnwwfHwwfHx8MA%3D%3D" alt="cool landscape">
+					<div class="absolute top-15 p-5">
+						<p>What's trending today?</p>
+						<h5 class="text-xl font-semibold ">How Food and Diet Can Affect Anxiety</h5>
+						<button class="button">Read</button>
+					</div>
 				</div>
-				<div class="flex items-center gap-2">
-					<img
-						class="w-6 h-6 rounded-full"
-						src="https://cdn.pixabay.com/photo/2016/11/29/13/14/attractive-1869761_1280.jpg"
-						alt=""
-					/>
-					<p>Stephanie mzwemba</p>
+				<div class="relative max-w-[40rem] col-start-2 row-span-4">
+					<img class="absolute inset-0 h-full -z-50 object-cover" src="https://plus.unsplash.com/premium_photo-1667113144491-eaccf04e894b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y2FsbXxlbnwwfHwwfHx8MA%3D%3D" alt="cool landscape">
+					<div class="absolute top-1/2 p-5">
+						<h5 class="text-2xl font-semibold ">How Food and Diet Can Affect Anxiety</h5>
+					</div>
+
 				</div>
-			</article>
-			<article class="col-span-1">
-				<div class="relative">
-					<img
-						class="w-full h-[9.375rem] rounded-lg"
-						src="https://images.unsplash.com/photo-1633104326066-504911cc1347?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGFueGlldHl8ZW58MHx8MHx8fDA%3D"
-						alt=""
-					/>
-					<a class="tag absolute left-0 top-0">Anxiety</a>
-				</div>
-				<div class="flex items-center items-center gap-4 my-4">
-					<p>30th Jan 2024</p>
-					<span> . </span>
-					<p>10 mins read</p>
-				</div>
-				<div class="mx-2">
-					<h5 class="mt-5 text-2xl font-semibold">
-						How Food and Diet Can Affect Anxiety
-					</h5>
-					<p class="my-2">
-						Food and diet play a significant role in mental health, including
-						anxiety levels. The nutrients we consume directly impact brain
-						function, neurotransmitter production...
-					</p>
-				</div>
-				<div class="flex items-center gap-2">
-					<img
-						class="w-6 h-6 rounded-full"
-						src="https://cdn.pixabay.com/photo/2016/11/29/13/14/attractive-1869761_1280.jpg"
-						alt=""
-					/>
-					<p>Stephanie mzwemba</p>
-				</div>
-			</article>
-			<article class="col-span-1">
-				<div class="relative">
-					<img
-						class="w-full h-[9.375rem] rounded-lg"
-						src="https://images.unsplash.com/photo-1633104326066-504911cc1347?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGFueGlldHl8ZW58MHx8MHx8fDA%3D"
-						alt=""
-					/>
-					<a class="tag absolute left-0 top-0">Anxiety</a>
-				</div>
-				<div class="flex items-center items-center gap-4 my-4">
-					<p>30th Jan 2024</p>
-					<span> . </span>
-					<p>10 mins read</p>
-				</div>
-				<div class="mx-2">
-					<h5 class="mt-5 text-2xl font-semibold">
-						How Food and Diet Can Affect Anxiety
-					</h5>
-					<p class="my-2">
-						Food and diet play a significant role in mental health, including
-						anxiety levels. The nutrients we consume directly impact brain
-						function, neurotransmitter production...
-					</p>
-				</div>
-				<div class="flex items-center gap-2">
-					<img
-						class="w-6 h-6 rounded-full"
-						src="https://cdn.pixabay.com/photo/2016/11/29/13/14/attractive-1869761_1280.jpg"
-						alt=""
-					/>
-					<p>Stephanie mzwemba</p>
-				</div>
-			</article>
+			</section>
 		</main>
+
+		<footer></footer>
+
+		<script>
+			const latestArticles = () => {
+				return {
+					slides: [],
+					currentSlide: 0,
+					async init() {
+						try {
+							const response = await fetch("./data.json");
+							this.slides = await response.json(); // Update slides after fetching
+						} catch (error) {
+							console.error("Error fetching articles:", error);
+						}
+					},
+					prevSlide() {
+						this.currentSlide =
+							this.currentSlide > 0
+								? this.currentSlide - 1
+								: this.slides.length - 1;
+					},
+					nextSlide() {
+						this.currentSlide =
+							this.currentSlide < this.slides.length - 1
+								? this.currentSlide + 1
+								: 0;
+					},
+				};
+			};
+		</script>
 	</body>
 </html>
